@@ -23,7 +23,8 @@ abstract class BaseClient
     }
 
     /**
-     * Returns JSON
+     * Returns array of objects
+     * @return array
      */
-    abstract protected function get();
+    abstract protected function get(): array;
 }

@@ -58,7 +58,7 @@ class YouTubeClient extends BaseClient
             $responses[] = json_decode($curl->get());
         }
 
-        return $this->parseResponse($responses);
+        return $this->parseRegions($responses);
     }
 
     /**
@@ -66,27 +66,39 @@ class YouTubeClient extends BaseClient
      * @param array $responses
      * @return array Array of parsed YouTube videos
      */
-    private function parseResponse(array $responses): array
+    private function parseRegions(array $responses): array
     {
-        $parsedResponses = [];
         $regionCounter = 0;
 
-        // Go through each response
+        // Go through each response (one response for each region)
         foreach ($responses as $response) {
             $videos = $response->items;
 
-            // Go through each video for each response
-            foreach ($videos as $video) {
-                $snippet = $video->snippet;
-                $youTube = new YouTube($this->regions[$regionCounter], $snippet->title,
-                    $snippet->description, $snippet->thumbnails->default->url);
-                $parsedResponses[] = $youTube;
-            }
-
+            // Go through each video for each response (X number of JSON objects for each region)
+            $parsedVideos = $this->parseVideosForRegion($videos, $regionCounter);
             $regionCounter++;
         }
 
-        return $parsedResponses;
+        return $parsedVideos;
+    }
+
+    /**
+     * Parses out the information from each video within a region
+     * @param array $videos The array of videos for a region
+     * @param int $regionCounter
+     */
+    private function parseVideosForRegion(array $videos, int $regionCounter): array
+    {
+        $parsedVideos = [];
+
+        foreach ($videos as $video) {
+            $snippet = $video->snippet;
+            $youTube = new YouTube($this->regions[$regionCounter], $snippet->title,
+                $snippet->description, $snippet->thumbnails->default->url);
+            $parsedVideos[] = $youTube;
+        }
+
+        return $parsedVideos;
     }
 
     /**

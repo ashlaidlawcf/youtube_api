@@ -12,14 +12,27 @@ use Illuminate\Http\Request;
 class APIController
 {
     /**
+     * @var YouTubeClient $youtube;
+     */
+    private $youtube;
+
+    /**
+     * Class constructor
+     * @param YouTubeClient $youtube The YouTubeClient object
+     * @return void
+     */
+    public function __construct(YouTubeClient $youtube)
+    {
+        $this->youtube = $youtube;
+    }
+
+    /**
      * Returns results
      * @param Request $request
-     * @return array|object
+     * @return array
      */
-    public function get(Request $request)
+    public function get(Request $request): array
     {
-        $youTubeClient = new YouTubeClient($request);
-
-        return $youTubeClient->get();
+        return $this->youtube->get($request);
     }
 }
