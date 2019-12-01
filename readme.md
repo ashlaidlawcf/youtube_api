@@ -4,7 +4,7 @@
 ## Description
 
 Basically, this is a simple `GET` request to YouTube's trending videos. It will return the top 10 trending videos for the US region, unless the parameters are changed. It will extract the trending videos' titles, description, and thumbnail URLs. The response is as follows:
-
+```
 [
     {
         "region: "US",
@@ -21,10 +21,10 @@ Basically, this is a simple `GET` request to YouTube's trending videos. It will 
         "thumbnail": "https://www.youtube.com/myvideo/thumbnail"
     }
 ]
-
+```
 ## How to Use
 
-To access the videos, the URL is: [http://localhost:8000/api/v1/video]. There are two parameters you can pass in: `regionCode` and `maxResults`. `regionCode` takes the standard two-letter region codes, seperated by commas. The default if no `regionCode` is passed in, it defaults to "us". Example: "us,nl,gb,de" for the United States, Netherlands, Great Britain, and Germany.
+To access the videos, the URL is: http://localhost:8000/api/v1/video. There are two parameters you can pass in: `regionCode` and `maxResults`. `regionCode` takes the standard two-letter region codes, seperated by commas. The default if no `regionCode` is passed in, it defaults to "us". Example: "us,nl,gb,de" for the United States, Netherlands, Great Britain, and Germany.
 
 `maxResults` takes an integer, and it's how many videos for each region you want. The default is 10 videos per region.
 
