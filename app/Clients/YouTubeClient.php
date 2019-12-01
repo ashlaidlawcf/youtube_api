@@ -69,13 +69,14 @@ class YouTubeClient extends BaseClient
     private function parseRegions(array $responses): array
     {
         $regionCounter = 0;
+        $parsedVideos = [];
 
         // Go through each response (one response for each region)
         foreach ($responses as $response) {
             $videos = $response->items;
 
             // Go through each video for each response (X number of JSON objects for each region)
-            $parsedVideos = $this->parseVideosForRegion($videos, $regionCounter);
+            $parsedVideos[] = $this->parseVideosForRegion($videos, $regionCounter);
             $regionCounter++;
         }
 
@@ -85,7 +86,7 @@ class YouTubeClient extends BaseClient
     /**
      * Parses out the information from each video within a region
      * @param array $videos The array of videos for a region
-     * @param int $regionCounter
+     * @param int $regionCounter The given region
      */
     private function parseVideosForRegion(array $videos, int $regionCounter): array
     {

@@ -1,21 +1,44 @@
-# Lumen PHP Framework
+# YouTube Region API
+#### By Ash Laidlaw (c) 2019
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+## Description
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+Basically, this is a simple `GET` request to YouTube's trending videos. It will return the top 10 trending videos for the US region, unless the parameters are changed. It will extract the trending videos' titles, description, and thumbnail URLs. The response is as follows:
 
-## Official Documentation
+[
+    {
+        "region: "US",
+        "title": "Best Video",
+        "description: "This is a good video!",
+        "thumbnail": "https://www.youtube.com/myvideo/thumbnail"
+    }
+],
+[
+    {
+        "region: "NL",
+        "title": "Best Video",
+        "description: "This is a good video!",
+        "thumbnail": "https://www.youtube.com/myvideo/thumbnail"
+    }
+]
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## How to Use
 
-## Security Vulnerabilities
+To access the videos, the URL is: [http://localhost:8000/api/v1/video]. There are two parameters you can pass in: `regionCode` and `maxResults`. `regionCode` takes the standard two-letter region codes, seperated by commas. The default if no `regionCode` is passed in, it defaults to "us". Example: "us,nl,gb,de" for the United States, Netherlands, Great Britain, and Germany.
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+`maxResults` takes an integer, and it's how many videos for each region you want. The default is 10 videos per region.
 
-## License
+## Setup
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+To use this API, you must have PHP > 7.1 installed, as well as Composer. You will also need a Google API key to use with YouTube.
+
+1. Run `composer install`, which will install the required dependencies.
+2. In the `.env` file, add the following `KEY='VALUE'` pair: `YOUTUBE_API_KEY=<YOUR API HEY HERE>`.
+3. Navigate to the root directory, and start your server by typing `php -S localhost:8000 -t public`.
+4. You are good to go!
+
+## Tech Used
+
+* Lumen
+* PHP 7.3
+* Composer
